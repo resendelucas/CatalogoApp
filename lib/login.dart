@@ -1,3 +1,4 @@
+import 'package:catalogo_app/home.dart';
 import 'package:flutter/material.dart';
 import 'register.dart';
 
@@ -16,7 +17,7 @@ class _LoginState extends State<Login> {
 
   @override
   void dispose(){
-    
+
     userController.dispose();
     passwordController.dispose();
 
@@ -69,7 +70,7 @@ class _LoginState extends State<Login> {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: (){
-      
+                          Navigator.push(context, MaterialPageRoute(builder:(context) => Home(user: userController.toString())));
                       }, 
                       child: const Text('Entrar', style: TextStyle(fontSize: 20),)),
                   ),
@@ -77,7 +78,7 @@ class _LoginState extends State<Login> {
                   TextButton(
                     onPressed: (){
       
-                      Navigator.push(context, MaterialPageRoute(builder: ((context) => Register())));
+                      Navigator.push(context, MaterialPageRoute(builder: ((context) => Register(user: userController.toString()))));
                     },
                     child: const Text('Não tem uma conta? Cadastre-se', style: TextStyle(
                       fontSize: 16,

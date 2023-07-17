@@ -4,13 +4,19 @@ import 'package:catalogo_app/userVideos.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  const Home({super.key, required this.user});
+
+  final String user;
+
 
   @override
   State<Home> createState() => _HomeState();
 }
 
+  
+
 class _HomeState extends State<Home> {
+
   int _currentIndex = 0;
 
   final List<Widget>_screens = [

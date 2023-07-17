@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
-  const Register({super.key});
+  const Register({required this.user, super.key});
+
+  final String user;
 
   @override
   State<Register> createState() => _RegisterState();
