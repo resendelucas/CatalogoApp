@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'DatabaseHelper.dart';
 
 class Register extends StatefulWidget {
   const Register({required this.user, super.key});
@@ -10,20 +11,18 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-
-  final nameController = TextEditingController();
+  final emailController = TextEditingController();
   final userController = TextEditingController();
   final passwordController = TextEditingController();
 
   @override
-  void dispose(){
-    nameController.dispose();
+  void dispose() {
+    emailController.dispose();
     userController.dispose();
     passwordController.dispose();
 
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -31,37 +30,31 @@ class _RegisterState extends State<Register> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(
-              height: 150
-              ),
+            const SizedBox(height: 150),
             Center(
-              child: Text('Cadastre-se', style: TextStyle(
-                fontSize: 36, 
-                color: Colors.blue[400]
-                ))
-              ),
+                child: Text('Cadastre-se',
+                    style: TextStyle(fontSize: 36, color: Colors.blue[400]))),
             Container(
-              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.12, left: 40, right: 40),
+              padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.12,
+                  left: 40,
+                  right: 40),
               child: Column(
                 children: [
                   TextField(
-                    controller: nameController,
+                    controller: emailController,
                     decoration: InputDecoration(
-                      labelText: 'Nome',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)
-                      )
-                    ),
+                        labelText: 'Email',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
                   ),
                   const SizedBox(height: 30),
                   TextField(
                     controller: userController,
                     decoration: InputDecoration(
-                      labelText: 'Usuário',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)
-                      )
-                    ),
+                        labelText: 'Usuário',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
                   ),
                   const SizedBox(height: 30),
                   TextField(
@@ -69,27 +62,33 @@ class _RegisterState extends State<Register> {
                     obscureText: true,
                     obscuringCharacter: '*',
                     decoration: InputDecoration(
-                      labelText: 'Senha',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)
-                      )
-                    ),
+                        labelText: 'Senha',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
                   ),
                   const SizedBox(height: 30),
                   SizedBox(
                     width: MediaQuery.of(context).size.width - 80,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: (){}, 
-                      child: const Text('Cadastrar', style: TextStyle(fontSize: 20),)),
+                        onPressed: () {
+                          DatabaseHelper().saveUserDb(emailController.text,
+                              userController.text, passwordController.text);
+                        },
+                        child: const Text(
+                          'Cadastrar',
+                          style: TextStyle(fontSize: 20),
+                        )),
                   ),
                   const SizedBox(height: 10),
                   TextButton(
-                    onPressed: (){},
-                    child: const Text('Já tem uma conta? Faça login', style: TextStyle(
-                      fontSize: 16,
-                      decoration: TextDecoration.underline
-                  )))
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Já tem uma conta? Faça login',
+                          style: TextStyle(
+                              fontSize: 16,
+                              decoration: TextDecoration.underline)))
                 ],
               ),
             )

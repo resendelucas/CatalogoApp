@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class Video {
   int id;
   String titulo;
@@ -7,6 +8,27 @@ class Video {
   Video(this.id, this.imagem, this.titulo);
 }
 
+class VideoDb {
+  int id;
+  String name;
+  String description;
+  String thumbnailImageId;
+  int type;
+  String ageRestriction;
+  double durationMinutes;
+  String releaseDate;
+
+  VideoDb(
+    this.id,
+    this.name,
+    this.description,
+    this.type,
+    this.ageRestriction,
+    this.durationMinutes,
+    this.thumbnailImageId,
+    this.releaseDate
+  );
+}
 
 class VideoCard extends StatelessWidget {
   const VideoCard({super.key, required this.video});
@@ -19,12 +41,9 @@ class VideoCard extends StatelessWidget {
       height: 220,
       width: 140,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6),
-        image: DecorationImage(
-          image: NetworkImage(video.imagem),
-          fit: BoxFit.cover
-        )
-      ),
+          borderRadius: BorderRadius.circular(6),
+          image: DecorationImage(
+              image: NetworkImage(video.imagem), fit: BoxFit.cover)),
     );
   }
 }
