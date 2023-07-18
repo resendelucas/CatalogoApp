@@ -18,18 +18,12 @@ class _SearchVideosState extends State<SearchVideos> {
 
   String genreSelected = 'Todos';
 
-  void dropdownCallback (String? selectedValue){
-    if (selectedValue is String){
-      setState(() {
-        genreSelected = selectedValue;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
+        
         children: [
           const SizedBox(height: 20),
           Padding(
@@ -52,6 +46,7 @@ class _SearchVideosState extends State<SearchVideos> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 28, vertical: 16),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ToggleButtons(
                   renderBorder: false,
@@ -71,10 +66,38 @@ class _SearchVideosState extends State<SearchVideos> {
                       }
                     });
                   }),
-                // DropdownButton(
-                //   items: _generateDropdownItems(genreList), 
-                //   value: genreSelected,
-                //   onChanged: dropdownCallback)
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    color:  Colors.transparent,
+                    border: Border.all(color: Colors.black38, width: 2),
+                    borderRadius: BorderRadius.circular(36),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: Color.fromARGB(0, 0, 0, 60),
+                        blurRadius: 5
+                      )
+                    ]
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 20, right: 20),
+                    child: DropdownButton(
+                      icon: Icon(Icons.arrow_circle_down_rounded),
+                      iconEnabledColor: Colors.white,
+                      dropdownColor: Colors.transparent,
+                      
+                      underline: Container(),
+                      style: TextStyle(color: Colors.white),
+                      items: _generateDropdownItems(genreList), 
+                      value: genreSelected,
+                      onChanged: (dynamic value){
+                        if (value is String){
+                          setState(() {
+                            genreSelected = value;
+                          });
+                        }
+                      }),
+                  ),
+                )
               ],
             ),
           )

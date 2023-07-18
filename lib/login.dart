@@ -2,6 +2,8 @@ import 'package:catalogo_app/home.dart';
 import 'package:flutter/material.dart';
 import 'register.dart';
 import 'DatabaseHelper.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -91,8 +93,9 @@ class _LoginState extends State<Login> {
                   const SizedBox(height: 10),
                   TextButton(
                       onPressed: () async {
-                        DatabaseHelper().insereDb();
-                        DatabaseHelper().filterVideo(0);
+                        DatabaseHelper().saveGenreDb('Terror');
+
+                        //DatabaseHelper().filterVideo(0);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
