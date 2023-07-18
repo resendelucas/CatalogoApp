@@ -70,7 +70,7 @@ class _LoginState extends State<Login> {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder:(context) => Home(user: userController.toString())));
+                          Navigator.push(context, MaterialPageRoute(builder:(context) => Home(user: userController.text)));
                       }, 
                       child: const Text('Entrar', style: TextStyle(fontSize: 20),)),
                   ),

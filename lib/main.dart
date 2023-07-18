@@ -9,7 +9,7 @@ void main() {
   runApp(MaterialApp(
     title: 'Catálogo de Vídeos',
     debugShowCheckedModeBanner: false,
-    home: Login(),
+    home: Home(user: 'lucas',),
   ));
 }
 

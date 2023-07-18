@@ -19,8 +19,8 @@ class _HomeState extends State<Home> {
 
   int _currentIndex = 0;
 
-  final List<Widget>_screens = [
-    HomeVideos(),
+  late final List<Widget>_screens = [
+    HomeVideos(user: widget.user),
     SearchVideos(),
     UserVideos()
   ];
