@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'videoDetails.dart';
+
 class Video {
   int id;
   String titulo;
@@ -33,6 +35,30 @@ class VideoDb {
 
 class VideoCard extends StatelessWidget {
   const VideoCard({super.key, required this.video});
+  final VideoDb video;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => VideoDetails(video: video)));
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 6),
+        height: 220,
+        width: 140,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            image: DecorationImage(
+                image: NetworkImage(video.thumbnailImageId), fit: BoxFit.cover)),
+      
+      ),
+    );
+  }
+}
+
+class VideoCardNotClickable extends StatelessWidget {
+  const VideoCardNotClickable({super.key, required this.video});
   final VideoDb video;
 
   @override

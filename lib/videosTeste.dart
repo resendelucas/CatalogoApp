@@ -1,14 +1,14 @@
 import 'videoCard.dart';
 
-List<Video> videolistTest = [
-  Video(1, 'https://upload.wikimedia.org/wikipedia/pt/7/78/Shrek_2_Poster.jpg', 'Shrek 2'),
-  Video(2, 'https://upload.wikimedia.org/wikipedia/pt/7/78/Shrek_2_Poster.jpg', 'Shrek 2'),
-  Video(3, 'https://upload.wikimedia.org/wikipedia/pt/7/78/Shrek_2_Poster.jpg', 'Shrek 2'),
-  Video(4, 'https://upload.wikimedia.org/wikipedia/pt/7/78/Shrek_2_Poster.jpg', 'Shrek 2'),
-  Video(5, 'https://upload.wikimedia.org/wikipedia/pt/7/78/Shrek_2_Poster.jpg', 'Shrek 2'),
-  Video(6, 'https://upload.wikimedia.org/wikipedia/pt/7/78/Shrek_2_Poster.jpg', 'Shrek 2'),
-  Video(7, 'https://upload.wikimedia.org/wikipedia/pt/7/78/Shrek_2_Poster.jpg', 'Shrek 2'),
-  Video(8, 'https://upload.wikimedia.org/wikipedia/pt/7/78/Shrek_2_Poster.jpg', 'Shrek 2')
+List<VideoDb> videolistTest = [
+  VideoDb(11, 'shrek2', 'filminho para toda familia', 0, 'Livre', 102, 'https://upload.wikimedia.org/wikipedia/pt/7/78/Shrek_2_Poster.jpg', '25/02/2004'),
+  VideoDb(22, 'shrek2', 'filminho para toda familia', 0, 'Livre', 102, 'https://upload.wikimedia.org/wikipedia/pt/7/78/Shrek_2_Poster.jpg', '25/02/2004'),
+  VideoDb(33, 'shrek2', 'filminho para toda familia', 0, 'Livre', 102, 'https://upload.wikimedia.org/wikipedia/pt/7/78/Shrek_2_Poster.jpg', '25/02/2004'),
+  VideoDb(44, 'shrek2', 'filminho para toda familia', 0, 'Livre', 102, 'https://upload.wikimedia.org/wikipedia/pt/7/78/Shrek_2_Poster.jpg', '25/02/2004'),
+  VideoDb(51, 'shrek2', 'filminho para toda familia', 0, 'Livre', 102, 'https://upload.wikimedia.org/wikipedia/pt/7/78/Shrek_2_Poster.jpg', '25/02/2004'),
+  VideoDb(58, 'shrek2', 'filminho para toda familia', 0, 'Livre', 102, 'https://upload.wikimedia.org/wikipedia/pt/7/78/Shrek_2_Poster.jpg', '25/02/2004'),
+  VideoDb(61, 'shrek2', 'filminho para toda familia', 0, 'Livre', 102, 'https://upload.wikimedia.org/wikipedia/pt/7/78/Shrek_2_Poster.jpg', '25/02/2004'),
+  VideoDb(71, 'shrek2', 'filminho para toda familia', 0, 'Livre', 102, 'https://upload.wikimedia.org/wikipedia/pt/7/78/Shrek_2_Poster.jpg', '25/02/2004'),
+  VideoDb(91, 'shrek2', 'filminho para toda familia', 0, 'Livre', 102, 'https://upload.wikimedia.org/wikipedia/pt/7/78/Shrek_2_Poster.jpg', '25/02/2004'),
+  VideoDb(13, 'shrek2', 'filminho para toda familia', 0, 'Livre', 102, 'https://upload.wikimedia.org/wikipedia/pt/7/78/Shrek_2_Poster.jpg', '25/02/2004'),
 ];
-
-List<String> generosTest = ['Aventura', 'Comédia', 'Drama', 'Terror', 'Suspense', 'Romance'];

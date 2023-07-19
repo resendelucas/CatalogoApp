@@ -127,16 +127,17 @@ class _SearchVideosState extends State<SearchVideos> {
     return items;
   }
 
-  Widget gridVideosBuilder(List<Video> videolist){
+  Widget gridVideosBuilder(List<VideoDb> videolist){
     return GridView.builder(
       itemCount: videolist.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
-        // mainAxisSpacing: 16,
-        // crossAxisSpacing: 16
+        mainAxisSpacing: 12,
+        crossAxisSpacing: 1,
+        mainAxisExtent: MediaQuery.of(context).size.height * 0.30,
       ), 
       itemBuilder:(context, index) {
-        // return VideoCard(video: videolist[index]);
+        return VideoCard(video: videolist[index]);
       },);
   }
 }

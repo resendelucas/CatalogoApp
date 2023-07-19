@@ -24,13 +24,27 @@ class _HomeVideosState extends State<HomeVideos> {
         Center(child: Text("Catálogo de Vídeos", style: TextStyle(color: Colors.white, fontSize: 28),)),
         const SizedBox(height: 40),
         Padding(padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10), child: Text('Filmes', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600))),
-        // FutureBuilder(builder:(context, snapshot) {
-          
-        // },)
-        videoListBuilder(DatabaseHelper().filterVideo(0) as List<VideoDb>),
+        FutureBuilder(
+          future: DatabaseHelper().filterVideo(0),
+          builder:(context, snapshot) {
+            if (snapshot.hasData) {
+              return videoListBuilder(snapshot.data!);
+            } else {
+              return CircularProgressIndicator();
+            }
+          },
+          ),
         Padding(padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10), child: Text('Series', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600))),
-        videoListBuilder(DatabaseHelper().filterVideo(1) as List<VideoDb>),
-        // generalVideoListBuilder(videolistTest, generosTest)
+        FutureBuilder(
+          future: DatabaseHelper().filterVideo(1),
+          builder:(context, snapshot) {
+            if (snapshot.hasData) {
+              return videoListBuilder(snapshot.data!);
+            } else {
+              return CircularProgressIndicator();
+            }
+          },
+          ),
       ]),
     );
   }
@@ -51,24 +65,4 @@ class _HomeVideosState extends State<HomeVideos> {
     );
   }
   
-  // Widget generalVideoListBuilder(List<Video> videolist, List<String> genreList){
-  //   return ListView.builder(
-  //     itemCount: genreList.length,
-  //     itemBuilder: (context, index) {
-  //       return Column(
-  //         children: [
-  //            Padding(
-  //             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10), 
-  //             child: Text(
-  //               genreList[index],
-  //               style: const TextStyle(
-  //                 color: Colors.white, 
-  //                 fontSize: 20, 
-  //                 fontWeight: FontWeight.w600))),
-  //           videoListBuilder(videolist)
-  //         ],
-  //       );
-  //     }
-  //   );
-  // }
 }
