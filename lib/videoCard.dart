@@ -64,7 +64,6 @@ class VideoCardNotClickable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 6),
       height: 220,
       width: 140,
       decoration: BoxDecoration(
