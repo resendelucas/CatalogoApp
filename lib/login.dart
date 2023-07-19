@@ -93,7 +93,10 @@ class _LoginState extends State<Login> {
                   const SizedBox(height: 10),
                   TextButton(
                       onPressed: () async {
-                        DatabaseHelper().saveGenreDb('Terror');
+                        //DatabaseHelper().insereDb();
+                        //DatabaseHelper().listVideos();
+                        DatabaseHelper().filterVideo(0,genre:'Animação');
+                        //DatabaseHelper().filterVideo(0);
 
                         //DatabaseHelper().filterVideo(0);
                         Navigator.push(

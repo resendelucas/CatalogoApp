@@ -17,19 +17,20 @@ class DatabaseHelper {
   Future<Database> initDb() async {
     final databasePath = await getDatabasesPath();
 
-    final path = join(databasePath, "database.db");
+    final path = join(databasePath, "dataBase.db");
 
     Database db =
         await openDatabase(path, version: 1, onCreate: (db, version) async {
-      String sql = """
+      await db.execute("""
             CREATE TABLE user(
               id INTEGER PRIMARY KEY AUTOINCREMENT,
               name VARCHAR NOT NULL,
               email VARCHAR NOT NULL,
               password VARCHAR NOT NULL
-            );
+            );""");
 
-            CREATE TABLE video(
+      await db.execute(""" 
+          CREATE TABLE video(
               id INTEGER PRIMARY KEY AUTOINCREMENT,
               name VARCHAR NOT NULL,
               description TEXT NOT NULL,
@@ -39,25 +40,25 @@ class DatabaseHelper {
               thumbnailImageId VARCHAR NOT NULL,
               releaseDate TEXT NOT NULL
             );
+      """);
 
-            CREATE TABLE genre(
+      await db.execute(""" 
+          CREATE TABLE genre(
               id INTEGER PRIMARY KEY AUTOINCREMENT,
               name VARCHAR NOT NULL
             );
+      """);
 
-            CREATE TABLE video_genre(
+      await db.execute(""" 
+          CREATE TABLE video_genre(
               id INTEGER PRIMARY KEY AUTOINCREMENT,
               videoid INTEGER NOT NULL,
               genreid INTEGER NOT NULL,
               FOREIGN KEY(videoid) REFERENCES video(id),
               FOREIGN KEY(genreid) REFERENCES genre(id)
             );
-
-
-            """;
-      await db.execute(sql);
-    }
-    );
+      """);
+    });
 
     return db;
   }
@@ -101,7 +102,7 @@ class DatabaseHelper {
     };
 
     int id = await db.insert('genre', genreData);
-    
+
     print("Genero adicionado: $name");
   }
 
@@ -110,15 +111,16 @@ class DatabaseHelper {
 
     String sql1 = "SELECT id from video WHERE name = '$nameVideo'";
     List ret1 = await db.rawQuery(sql1);
+    int videoId = ret1[0]['id'];
     String sql2 = "SELECT id from genre WHERE name = '$nameGenre'";
     List ret2 = await db.rawQuery(sql2);
-
+    int genreId = ret2[0]['id'];
     Map<String, dynamic> videoGenreData = {
-      "videoid": ret1[0],
-      "genreid": ret2[0]
+      "videoid": videoId,
+      "genreid": genreId,
     };
 
-    int id = await db.insert("video_genre", videoGenreData);
+    int id = await db.insert('video_genre', videoGenreData);
   }
 
   Future<void> saveUserDb(String name, String email, String password) async {
@@ -146,23 +148,87 @@ class DatabaseHelper {
     }
   }
 
-  //Future<Map<String, List<VideoDb>>>
-  Future<void> filterVideo(int type) async {
+  Future<VideoDb> searchVideo(String name) async {
     Database db = await initDb();
-    String sql =
-        "SELECT * FROM video, video_genre WHERE type = '$type' and video.id = video_genre.videoid GROUP BY genreid";
-    List<Map<String, Object?>> ret = await db.rawQuery(sql);
-    print(ret[0]);
+    String sql = "SELECT * FROM video WHERE name = '$name'";
+    List ret = await db.rawQuery(sql);
+    VideoDb v = VideoDb(
+        ret[0]["id"],
+        ret[0]["name"],
+        ret[0]["description"],
+        ret[0]["type"],
+        ret[0]["ageRestriction"],
+        ret[0]["durationMinutes"],
+        ret[0]["thumbnailImageId"],
+        ret[0]["releaseDate"]);
+
+    print(v);
+    return v;
+  }
+
+  //Future<Map<String, List<VideoDb>>>
+  Future<List<VideoDb>> filterVideo(int type, {String? genre}) async {
+    Database db = await initDb();
+    String sql;
+    if (genre == null) {
+      sql = "SELECT * FROM video WHERE type = $type";
+    } else {
+      sql =
+          "SELECT v.name FROM video v, video_genre vg, genre g WHERE v.id = vg.videoid and vg.genreid = g.id and g.name = '$genre' and type = $type;";
+    }
+
+    List<dynamic> ret = await db.rawQuery(sql);
+
+    List<VideoDb> videos = [];
+    for (int i = 0; i < ret.length; i++) {
+      VideoDb video = await searchVideo(ret[i]['name']);
+      videos.add(video);
+    }
+    return videos;
   }
 
   Future<void> insereDb() async {
-    Database db = await initDb();
-    String sql = """
-        INSERT INTO video(name, description, type, ageRestriction, durationMinutes, thumbnailImageId, releaseDate) VALUES('Shrek', 'Descrição 1', 0, 'Livre', 92, 'https://upload.wikimedia.org/wikipedia/pt/7/78/Shrek_2_Poster.jpg', '18/06/2004');
-        INSERT INTO video(name, description, type, ageRestriction, durationMinutes, thumbnailImageId, releaseDate) VALUES('Avatar', 'Descrição 2', 0, '12', 162, 'https://upload.wikimedia.org/wikipedia/pt/b/b0/Avatar-Teaser-Poster.jpg', '10/12/2009');
-        INSERT INTO video(name, description, type, ageRestriction, durationMinutes, thumbnailImageId, releaseDate) VALUES('The last of us', 'Descrição 3', 1, '16 anos', 81, 'https://meups.com.br/wp-content/uploads/2022/11/Serie-de-The-Last-of-Us-3.jpg', '15/01/2023');
-        INSERT INTO video(name, description, type, ageRestriction, durationMinutes, thumbnailImageId, releaseDate) VALUES('Madagascar', 'Descrição 4', 0, 'Livre', 86, 'https://upload.wikimedia.org/wikipedia/pt/3/36/Madagascar_Theatrical_Poster.jpg', '25/05/2005');
-      """;
+    //Database db = await initDb();
+
+    saveVideoDb(
+        'Shrek',
+        'Descrição 1',
+        0,
+        'Livre',
+        92,
+        'https://upload.wikimedia.org/wikipedia/pt/7/78/Shrek_2_Poster.jpg',
+        '18/06/2004',
+        ["Animação", "Comédia", "Fantasia"]);
+    saveVideoDb(
+        'Avatar',
+        'Descrição 2',
+        0,
+        '12',
+        162,
+        'https://upload.wikimedia.org/wikipedia/pt/b/b0/Avatar-Teaser-Poster.jpg',
+        '10/12/2009', [
+      "Aventura",
+      "Ação",
+      "Ficção",
+    ]);
+    saveVideoDb(
+        'The last of us',
+        'Descrição 3',
+        1,
+        '16 anos',
+        81,
+        'https://meups.com.br/wp-content/uploads/2022/11/Serie-de-The-Last-of-Us-3.jpg',
+        '15/01/2023',
+        ["Terror"]);
+    saveVideoDb(
+        'Madagascar',
+        'Descrição 4',
+        0,
+        'Livre',
+        86,
+        'https://upload.wikimedia.org/wikipedia/pt/3/36/Madagascar_Theatrical_Poster.jpg',
+        '25/05/2005',
+        ['Animação']);
 
     saveGenreDb('Suspense');
     saveGenreDb('Ação');
@@ -178,25 +244,27 @@ class DatabaseHelper {
     saveGenreDb('Musical');
     saveGenreDb('Reality');
     saveGenreDb('Variedades');
-
-    db.rawInsert(sql);
-    saveVideo_GenreDb('Avatar', 'Aventura');
-    saveVideo_GenreDb('Avatar', 'Ação');
-    saveVideo_GenreDb('Avatar', 'Ficção');
-    saveVideo_GenreDb('Shrek', 'Aventura');
-    saveVideo_GenreDb('Shrek', 'Animação');
-    saveVideo_GenreDb('Shrek', 'Comédia');
-    saveVideo_GenreDb('Shrek', 'Fantasia');
-    saveVideo_GenreDb('The last of us', 'Terror');
-    saveVideo_GenreDb('Madagascar', 'Animação');
   }
 
-  void deleteDatabase(String path) =>
-    databaseFactory.deleteDatabase(path);
+  listGenres() async {
+    Database db = await initDb();
+    String sql = "SELECT * from genre";
+    List ret = await db.rawQuery(sql);
+    print("Generos : $ret");
+  }
 
+  listVideos() async {
+    Database db = await initDb();
+    String sql = "SELECT * from video";
+    List ret = await db.rawQuery(sql);
+    print("Videos : $ret");
+  }
 
-  Future<void> criaTabelas() async{
-    
+  listVideo_Genres() async {
+    Database db = await initDb();
+    String sql = "SELECT videoid, genreid from video_genre";
+    List ret = await db.rawQuery(sql);
+    print("Video_genero : $ret");
   }
 }
 

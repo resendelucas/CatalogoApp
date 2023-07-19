@@ -72,8 +72,7 @@ class _RegisterState extends State<Register> {
                     height: 50,
                     child: ElevatedButton(
                         onPressed: () {
-                          DatabaseHelper().saveUserDb(emailController.text,
-                              userController.text, passwordController.text);
+                          DatabaseHelper().saveUserDb(emailController.text,userController.text, passwordController.text);
                         },
                         child: const Text(
                           'Cadastrar',

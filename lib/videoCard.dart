@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 class Video {
@@ -15,7 +16,7 @@ class VideoDb {
   String thumbnailImageId;
   int type;
   String ageRestriction;
-  double durationMinutes;
+  int durationMinutes;
   String releaseDate;
 
   VideoDb(
@@ -32,7 +33,7 @@ class VideoDb {
 
 class VideoCard extends StatelessWidget {
   const VideoCard({super.key, required this.video});
-  final Video video;
+  final VideoDb video;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class VideoCard extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
           image: DecorationImage(
-              image: NetworkImage(video.imagem), fit: BoxFit.cover)),
+              image: NetworkImage(video.thumbnailImageId), fit: BoxFit.cover)),
     );
   }
 }

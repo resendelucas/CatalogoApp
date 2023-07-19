@@ -1,3 +1,4 @@
+import 'package:catalogo_app/userLogged.dart';
 import 'package:flutter/material.dart';
 
 class UserVideos extends StatefulWidget {
@@ -8,14 +9,18 @@ class UserVideos extends StatefulWidget {
 }
 
 class _UserVideosState extends State<UserVideos> {
+
+  int _currentIndex = 0;
+
+  // late final List<Widget>_screens = [
+  //   UserLoggedVideosScreen(),
+  //   UserNotLoggedScreen()
+  // ];
+
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        child: Text("MEUS VIDEOS", style: TextStyle(color: Colors.white, fontSize: 24)),
-      ),
-    );
+    return UserLoggedVideosScreen(username: '');
   }
 }
-
 

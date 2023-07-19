@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'videoCard.dart';
+import 'videosTeste.dart';
 
 class SearchVideos extends StatefulWidget {
   const SearchVideos({super.key});
@@ -11,10 +13,10 @@ class _SearchVideosState extends State<SearchVideos> {
   final searchController = TextEditingController();
 
   final List<bool> _selectedTypeVideo = [true, false];
-  final List<String> genreList = ['Ação','Animação', 'Aventura', 'Comédia',
+  final List<String> genreList = [ 'Todos', 'Ação','Animação', 'Aventura', 'Comédia',
   'Drama', 'Ficção', 'Romance','Suspense', 
   'Terror', 'Fantasia', 'Musical', 'Reality',
-  'Variedades', 'Documentário', 'Todos'];
+  'Variedades', 'Documentário'];
 
   String genreSelected = 'Todos';
 
@@ -29,17 +31,22 @@ class _SearchVideosState extends State<SearchVideos> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
             child: TextField(
+              
               style: TextStyle(color: Colors.white),
               controller: searchController,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.search_rounded),
                 prefixIconColor: Colors.white,
                   filled: true,
-                  fillColor: Color.fromARGB(255, 75, 75, 75),
+                  fillColor: Colors.transparent,
+                  
                   labelText: 'Pesquisar',
                   labelStyle: TextStyle(color: Colors.white),
                   border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
+                    
+                    borderSide: BorderSide(
+                      color: Colors.black
+                    ),
                       borderRadius: BorderRadius.circular(12))),
             ),
           ),
@@ -53,7 +60,7 @@ class _SearchVideosState extends State<SearchVideos> {
                   children:[
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Text('Filme', style: TextStyle(color: Colors.white),)),
+                      child: Text('Filmes', style: TextStyle(color: Colors.white),)),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Text('Series', style: TextStyle(color: Colors.white),)),
@@ -67,6 +74,7 @@ class _SearchVideosState extends State<SearchVideos> {
                     });
                   }),
                 DecoratedBox(
+                  
                   decoration: BoxDecoration(
                     color:  Colors.transparent,
                     border: Border.all(color: Colors.black38, width: 2),
@@ -80,11 +88,12 @@ class _SearchVideosState extends State<SearchVideos> {
                   ),
                   child: Padding(
                     padding: EdgeInsets.only(left: 20, right: 20),
+                    
                     child: DropdownButton(
                       icon: Icon(Icons.arrow_circle_down_rounded),
                       iconEnabledColor: Colors.white,
                       dropdownColor: Colors.transparent,
-                      
+                      menuMaxHeight: 250,
                       underline: Container(),
                       style: TextStyle(color: Colors.white),
                       items: _generateDropdownItems(genreList), 
@@ -100,7 +109,10 @@ class _SearchVideosState extends State<SearchVideos> {
                 )
               ],
             ),
-          )
+          ),
+          Flexible(
+            child: gridVideosBuilder(videolistTest),
+            )
         ],
       ),
     );
@@ -109,8 +121,22 @@ class _SearchVideosState extends State<SearchVideos> {
   List<DropdownMenuItem> _generateDropdownItems(List<String> itemList){
     List<DropdownMenuItem> items = [];
     for (int i = 0; i<itemList.length; i++){
-      items.add(DropdownMenuItem(child: Text(itemList[i]), value: itemList[i]));
+      items.add(DropdownMenuItem(
+        child: Text(itemList[i]), value: itemList[i]));
     }
     return items;
+  }
+
+  Widget gridVideosBuilder(List<Video> videolist){
+    return GridView.builder(
+      itemCount: videolist.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        // mainAxisSpacing: 16,
+        // crossAxisSpacing: 16
+      ), 
+      itemBuilder:(context, index) {
+        // return VideoCard(video: videolist[index]);
+      },);
   }
 }
