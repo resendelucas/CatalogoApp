@@ -1,21 +1,39 @@
+import 'package:catalogo_app/login.dart';
+import 'package:catalogo_app/userLogged.dart';
 import 'package:flutter/material.dart';
 
+import 'userNotLogged.dart';
+
 class UserVideos extends StatefulWidget {
-  const UserVideos({super.key});
+  const UserVideos({super.key, required this.username});
+
+  final String username;
 
   @override
   State<UserVideos> createState() => _UserVideosState();
 }
 
 class _UserVideosState extends State<UserVideos> {
+  int _currentIndex = 0;
+
+  late final List<Widget> _screens = [
+    UserLoggedVideosScreen(
+      username: USER_NAME,
+    ),
+    UserNotLoggedScreen()
+  ];
+
+  @override
+  void initState() {
+    if (widget.username == '')
+      _currentIndex = 1;
+    else
+      _currentIndex = 0;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        child: Text("MEUS VIDEOS", style: TextStyle(color: Colors.white, fontSize: 24)),
-      ),
-    );
+    return _screens[_currentIndex];
   }
 }
-
-
