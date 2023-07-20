@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'login.dart';
 import 'DatabaseHelper.dart';
 
+// ignore: must_be_immutable
 class VideoDetails extends StatefulWidget {
-  const VideoDetails({super.key, required this.video});
+  VideoDetails({super.key, required this.video});
 
-  final VideoDb video;
+  VideoDb video;
   @override
   State<VideoDetails> createState() => _VideoDetailsState();
 }
@@ -37,6 +38,12 @@ class _VideoDetailsState extends State<VideoDetails> {
               context: context, 
               builder: (context){
                 return EditVideoScreen(video: widget.video,);
+              }).then((value){
+                print(value);
+                setState(() {
+                  widget.video = value;
+                });
+                print(widget.video.name);
               });
       }),
       backgroundColor: Color.fromARGB(255, 44, 47, 66),

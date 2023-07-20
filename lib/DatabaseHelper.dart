@@ -206,7 +206,6 @@ class DatabaseHelper {
     return v;
   }
 
-  //Future<Map<String, List<VideoDb>>>
   Future<List<VideoDb>> filterVideo(int type, String nameSearched,
       {String? genre}) async {
     Database db = await initDb();
