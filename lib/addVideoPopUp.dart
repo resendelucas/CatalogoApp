@@ -522,7 +522,18 @@ class _EditVideoScreenState extends State<EditVideoScreen> {
                                 releaseController.text,
                                 );
 
-                            Navigator.pop(context);
+                            VideoDb video = VideoDb(
+                              widget.video.id,
+                                nameController.text,
+                                descriptionController.text,
+                                _typeSelected[0] ? 0 : 1,
+                                selectedAge,
+                                int.parse(durationController.text),
+                                thumbnailController.text,
+                                releaseController.text,
+                                _selectedGenres
+                                );
+                            Navigator.pop(context, video);
                           },
                           child: const Text(
                             'Salvar',
