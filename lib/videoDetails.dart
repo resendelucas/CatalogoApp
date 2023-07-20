@@ -14,8 +14,14 @@ class VideoDetails extends StatefulWidget {
 
 class _VideoDetailsState extends State<VideoDetails> {
 
+  // void changeVideo(VideoDb novoVideo){
+  //   setState(() {
+  //     video = no
+  //   });
+  // }
+
   bool verifyUserLogged(){
-    print("AQUI NO VIDEO DETAIL: $USER_NAME");
+    // print("AQUI NO VIDEO DETAIL: $USER_NAME");
     if (USER_NAME == '') return true;
     return false;
   }

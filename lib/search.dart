@@ -13,7 +13,7 @@ class _SearchVideosState extends State<SearchVideos> {
   final searchController = TextEditingController();
   
   final List<bool> _selectedTypeVideo = [true, false];
-  final List<String> genreList = [ 'Todos', 'Ação','Animação', 'Aventura', 'Comédia',
+  final List<String> genreList = [ 'Todos', 'Ação','Animação', 'Aventura', 'Comédia', 'Crime', 
   'Documentário', 'Drama', 'Esportes', 'Fantasia', 'Ficção', 'Guerra',  'Mistério', 
   'Musical', 'Policial', 'Reality', 'Romance','Sobrevivência','Suspense', 'Terror',  'Variedades',
   ];
@@ -35,7 +35,7 @@ class _SearchVideosState extends State<SearchVideos> {
       child: Column(
         
         children: [
-          const SizedBox(height: 20),
+          const SizedBox(height: 50),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
             child: TextField(

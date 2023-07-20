@@ -72,16 +72,16 @@ class _LoginState extends State<Login> {
                         onPressed: () async {
                           if (await DatabaseHelper().verifyUser(
                               userController.text, passwordController.text)) {
-                            print('pode entrar');
+                            // print('pode entrar');
                             USER_NAME = userController.text;
-                            print(USER_NAME);
+                            // print(USER_NAME);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: ((context) =>
                                         Home(user: userController.text))));
                           } else {
-                            print('xiiiii');
+                            // print('xiiiii');
                             setState(() {
                               loginAccepted = false;
                             });
@@ -95,13 +95,9 @@ class _LoginState extends State<Login> {
                   const SizedBox(height: 10),
                   TextButton(
                       onPressed: () async {
-                        //DatabaseHelper().insereDb();
-                        //DatabaseHelper().listVideos();
-                        //DatabaseHelper().filterVideo(0,genre:'Animação');
-                        //DatabaseHelper().filterVideo(0);
                         DatabaseHelper().listGenres();
                         //DatabaseHelper().listVideo_Genres();
-                        //DatabaseHelper().listVideos();
+                        DatabaseHelper().listVideos();
 
                         Navigator.push(
                             context,

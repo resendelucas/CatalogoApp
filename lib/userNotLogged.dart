@@ -1,7 +1,5 @@
-import 'package:catalogo_app/videosTeste.dart';
 import 'package:flutter/material.dart';
 
-import 'videoCard.dart';
 
 class UserNotLoggedScreen extends StatefulWidget {
   const UserNotLoggedScreen({super.key});
