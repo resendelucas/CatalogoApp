@@ -1,15 +1,14 @@
-
 import 'package:flutter/material.dart';
 
 import 'videoDetails.dart';
 
-class Video {
+/*class Video {
   int id;
   String titulo;
   String imagem;
 
   Video(this.id, this.imagem, this.titulo);
-}
+}*/
 
 class VideoDb {
   int id;

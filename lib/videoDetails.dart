@@ -1,6 +1,8 @@
 import 'package:catalogo_app/videoCard.dart';
 import 'package:flutter/material.dart';
 
+import 'DatabaseHelper.dart';
+
 class VideoDetails extends StatefulWidget {
   const VideoDetails({super.key, required this.video});
 
@@ -34,14 +36,17 @@ class _VideoDetailsState extends State<VideoDetails> {
                 children: [
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  height: 60,
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  height: 120,
                   child: Text(
                     widget.video.name,
                     maxLines: 3,
+                    softWrap: true,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 28),
                   ),
                 ),
-                SizedBox(height: 50,),
+                // SizedBox(height: 50,),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18),
                   child: Text(widget.video.type.isEven ? 'Filme':'Série',
@@ -62,10 +67,32 @@ class _VideoDetailsState extends State<VideoDetails> {
                   child: Text('Restrição: ${widget.video.ageRestriction}+',
                   style: TextStyle(color: const Color.fromARGB(255, 197, 194, 194)),),
                 ),
+                FutureBuilder(
+                  future: DatabaseHelper().genresByVideo(widget.video.name),
+                  builder:(context, snapshot) {
+                    if (snapshot.hasData){
+
+                    return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      height: 45,
+                      child: Text('${snapshot.data!.join(" ")}',
+                      
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: const Color.fromARGB(255, 197, 194, 194)),),
+                    ),
+                    );
+                    }
+                    else {
+                      return CircularProgressIndicator();
+                    }
+                  },),
               ],)
             ],),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
               child: Text('Descrição', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 22),),
             ),
             Container(

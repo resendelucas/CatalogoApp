@@ -95,10 +95,12 @@ class _LoginState extends State<Login> {
                       onPressed: () async {
                         //DatabaseHelper().insereDb();
                         //DatabaseHelper().listVideos();
-                        DatabaseHelper().filterVideo(0,genre:'Animação');
+                        //DatabaseHelper().filterVideo(0,genre:'Animação');
                         //DatabaseHelper().filterVideo(0);
+                        //DatabaseHelper().listGenres();
+                        //DatabaseHelper().listVideo_Genres();
+                        //DatabaseHelper().listVideos();
 
-                        //DatabaseHelper().filterVideo(0);
                         Navigator.push(
                             context,
                             MaterialPageRoute(

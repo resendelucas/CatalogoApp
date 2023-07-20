@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'DatabaseHelper.dart';
 import 'videoCard.dart';
 import 'videosTeste.dart';
 
@@ -11,16 +12,24 @@ class SearchVideos extends StatefulWidget {
 
 class _SearchVideosState extends State<SearchVideos> {
   final searchController = TextEditingController();
-
+  
   final List<bool> _selectedTypeVideo = [true, false];
   final List<String> genreList = [ 'Todos', 'Ação','Animação', 'Aventura', 'Comédia',
-  'Drama', 'Ficção', 'Romance','Suspense', 
-  'Terror', 'Fantasia', 'Musical', 'Reality',
-  'Variedades', 'Documentário'];
+  'Crime', 'Documentário', 'Drama', 'Esportes', 'Fantasia', 'Ficção', 'Guerra',  'Mistério', 
+  'Musical', 'Reality', 'Romance','Sobrevivência','Suspense', 'Terror',  'Variedades',
+  ];
 
   String genreSelected = 'Todos';
 
 
+  @override 
+  void dispose() {
+    // TODO: implement dispose
+    searchController.dispose();
+    super.dispose();
+
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -110,9 +119,17 @@ class _SearchVideosState extends State<SearchVideos> {
               ],
             ),
           ),
-          Flexible(
-            child: gridVideosBuilder(videolistTest),
-            )
+          FutureBuilder(
+          future: DatabaseHelper().filterVideo(_selectedTypeVideo[0] ? 0 : 1, searchController.text, genre: genreSelected),
+          builder:(context, snapshot) {
+            if (snapshot.hasData) {
+              return Flexible(child: gridVideosBuilder(snapshot.data!));
+            } else {
+              return CircularProgressIndicator();
+            }
+          },
+          ),
+
         ],
       ),
     );

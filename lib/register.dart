@@ -1,3 +1,4 @@
+import 'package:catalogo_app/addVideoPopUp.dart';
 import 'package:flutter/material.dart';
 import 'DatabaseHelper.dart';
 
@@ -73,6 +74,7 @@ class _RegisterState extends State<Register> {
                     child: ElevatedButton(
                         onPressed: () {
                           DatabaseHelper().saveUserDb(emailController.text,userController.text, passwordController.text);
+    
                         },
                         child: const Text(
                           'Cadastrar',

@@ -25,7 +25,7 @@ class _HomeVideosState extends State<HomeVideos> {
         const SizedBox(height: 40),
         Padding(padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10), child: Text('Filmes', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600))),
         FutureBuilder(
-          future: DatabaseHelper().filterVideo(0),
+          future: DatabaseHelper().filterVideo(0, '', genre: 'Todos'),
           builder:(context, snapshot) {
             if (snapshot.hasData) {
               return videoListBuilder(snapshot.data!);
@@ -36,7 +36,7 @@ class _HomeVideosState extends State<HomeVideos> {
           ),
         Padding(padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10), child: Text('Series', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600))),
         FutureBuilder(
-          future: DatabaseHelper().filterVideo(1),
+          future: DatabaseHelper().filterVideo(1,'', genre: 'Todos'),
           builder:(context, snapshot) {
             if (snapshot.hasData) {
               return videoListBuilder(snapshot.data!);

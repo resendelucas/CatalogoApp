@@ -3,6 +3,8 @@ import 'package:catalogo_app/search.dart';
 import 'package:catalogo_app/userVideos.dart';
 import 'package:flutter/material.dart';
 
+import 'addVideoPopUp.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key, required this.user});
 
@@ -22,7 +24,7 @@ class _HomeState extends State<Home> {
   late final List<Widget>_screens = [
     HomeVideos(user: widget.user),
     SearchVideos(),
-    UserVideos()
+    UserVideos(username: widget.user)
   ];
   
   void onTabTap(int index){
@@ -31,9 +33,27 @@ class _HomeState extends State<Home> {
     });
   }
 
+  bool verifyUserScreen(){
+    print(widget.user);
+    print(widget.user);
+    if (_currentIndex == 2 && widget.user != '') return false;
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: verifyUserScreen() ? null: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: verifyUserScreen() ? null: FloatingActionButton(
+          backgroundColor: const Color.fromARGB(255, 132, 172, 205),
+          child: Icon(Icons.add),
+          onPressed: (){
+            showDialog(
+              context: context, 
+              builder: (context){
+                return AddVideoScreen();
+              });
+  }),
       backgroundColor: Color.fromARGB(255, 44, 47, 66),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
