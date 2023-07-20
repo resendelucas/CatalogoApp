@@ -43,6 +43,7 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
     false,
     false,
     false,
+    false,
     false
   ];
 
@@ -60,6 +61,7 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
     'Guerra',
     'Mistério',
     'Musical',
+    'Policial',
     'Reality',
     'Romance',
     'Sobrevivência',
@@ -330,6 +332,7 @@ class _EditVideoScreenState extends State<EditVideoScreen> {
     false,
     false,
     false,
+    false,
     false
   ];
 
@@ -338,6 +341,7 @@ class _EditVideoScreenState extends State<EditVideoScreen> {
     'Animação',
     'Aventura',
     'Comédia',
+    'Crime',
     'Documentário',
     'Drama',
     'Esportes',

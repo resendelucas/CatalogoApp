@@ -1,3 +1,5 @@
+import 'package:catalogo_app/home.dart';
+import 'package:catalogo_app/login.dart';
 import 'package:flutter/material.dart';
 import 'DatabaseHelper.dart';
 
@@ -73,7 +75,8 @@ class _RegisterState extends State<Register> {
                     child: ElevatedButton(
                         onPressed: () {
                           DatabaseHelper().saveUserDb(emailController.text,userController.text, passwordController.text);
-    
+                          USER_NAME = userController.text;
+                          Navigator.push(context, MaterialPageRoute(builder:(context) => Home(user: USER_NAME),));
                         },
                         child: const Text(
                           'Cadastrar',

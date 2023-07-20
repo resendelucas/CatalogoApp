@@ -83,7 +83,7 @@ class DatabaseHelper {
       "releaseDate": releaseDate
     };
 
-    int idVideo = await db.insert("video", videoData);
+    int id = await db.insert("video", videoData);
     for (String s in genre) {
       saveVideo_GenreDb(name, s);
     }
@@ -101,8 +101,6 @@ class DatabaseHelper {
     };
 
     int id = await db.insert('genre', genreData);
-
-    print("Genero adicionado: $name");
   }
 
   Future<void> saveVideo_GenreDb(String nameVideo, String nameGenre) async {
@@ -132,7 +130,6 @@ class DatabaseHelper {
     };
 
     int id = await db.insert("user", userData);
-    print("Id inserido: $id");
   }
 
   Future<bool> verifyUser(String user, String password) async {
@@ -156,7 +153,6 @@ class DatabaseHelper {
     for (var r in ret) {
       genres.add(r["name"]);
     }
-    print(genres);
     return genres;
   }
 
@@ -189,7 +185,6 @@ class DatabaseHelper {
       releaseDate,
       id
     ]);
-    print("Colunas Modificadas: $n");
   }
 
   Future<VideoDb> searchVideo(String name) async {
@@ -208,8 +203,6 @@ class DatabaseHelper {
         ret[0]["thumbnailImageId"],
         ret[0]["releaseDate"],
         generos);
-
-    print(v);
     return v;
   }
 
@@ -218,29 +211,11 @@ class DatabaseHelper {
       {String? genre}) async {
     Database db = await initDb();
     String sql;
-    /*
-    if (nameSearched == "") {
-      if (genre == "Todos") {
-        sql = "SELECT * FROM video WHERE type = $type";
-      } else {
-        sql =
-            "SELECT v.name FROM video v, video_genre vg, genre g WHERE v.id = vg.videoid and vg.genreid = g.id and g.name = '$genre' and type = $type;";
-      }
-    } else {
-      if (genre == "Todos") {
-        sql =
-            "SELECT * FROM video WHERE type = $type and video.name like '%$nameSearched%'";
-      } else {
-        sql =
-            "SELECT v.name FROM video v, video_genre vg, genre g WHERE v.id = vg.videoid and vg.genreid = g.id and g.name = '$genre' and type = $type and v.name like '%$nameSearched%';";
-      }
-    }*/
-
     if (nameSearched == "") nameSearched = "%";
     if (genre == "Todos") genre = "%";
     if (type == 2) {
       sql =
-          "SELECT v.name FROM video v, video_genre vg, genre g WHERE v.id = vg.videoid and vg.genreid = g.id and g.name like '$genre' and v.name like '%$nameSearched%';";
+          "SELECT distinct v.name FROM video v, video_genre vg, genre g WHERE v.id = vg.videoid and vg.genreid = g.id and g.name like '$genre' and v.name like '%$nameSearched%';";
     } else {
       sql =
           "SELECT distinct v.name FROM video v, video_genre vg, genre g WHERE v.id = vg.videoid and vg.genreid = g.id and g.name like '$genre' and type = $type and v.name like '%$nameSearched%';";
@@ -255,11 +230,17 @@ class DatabaseHelper {
     return videos;
   }
 
-  Future<void> AutoPopulateDb() async {
+  Future<void> autoPopulateDb() async {
+    Database db = await initDb();
+    String sql = "select * from video;";
+    List ret = await db.rawQuery(sql);
+    if (ret.isNotEmpty) return;
+
     saveGenreDb('Suspense');
     saveGenreDb('Ação');
     saveGenreDb('Aventura');
     saveGenreDb('Comédia');
+    saveGenreDb('Crime');
     saveGenreDb('Drama');
     saveGenreDb('Ficção');
     saveGenreDb('Romance');
@@ -274,7 +255,7 @@ class DatabaseHelper {
     saveGenreDb('Sobrevivência');
     saveGenreDb('Mistério');
     saveGenreDb('Esportes');
-    saveGenreDb('Crime');
+    saveGenreDb('Policial');
 
     saveVideoDb(
         'Shrek',
@@ -503,7 +484,7 @@ class DatabaseHelper {
         152,
         'https://img.elo7.com.br/product/original/264FCC6/big-poster-filme-batman-o-cavaleiro-das-trevas-lo02-90x60-cm-batman.jpg',
         '18/07/2008',
-        ["Ação", "Suspense", "Crime"]);
+        ["Ação", "Suspense", "Policial"]);
     saveVideoDb(
         'The Mandalorian',
         'Descrição 26',
@@ -517,7 +498,8 @@ class DatabaseHelper {
 
   listGenres() async {
     Database db = await initDb();
-    String sql = "SELECT * from genre";
+    //String sql = "SELECT * from genre";
+    String sql = "SELECT * from genre where id = 234";
     List ret = await db.rawQuery(sql);
     print("Generos : $ret");
   }
@@ -535,9 +517,4 @@ class DatabaseHelper {
     List ret = await db.rawQuery(sql);
     print("Video_genero : $ret");
   }
-
 }
-
-/*void deleteDatabase(String path) =>
-    databaseFactory.deleteDatabase(path);
-    */
