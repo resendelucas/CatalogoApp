@@ -34,8 +34,6 @@ class _HomeState extends State<Home> {
   }
 
   bool verifyUserScreen(){
-    print(widget.user);
-    print(widget.user);
     if (_currentIndex == 2 && widget.user != '') return false;
     return true;
   }

@@ -2,8 +2,8 @@ import 'package:catalogo_app/home.dart';
 import 'package:flutter/material.dart';
 import 'register.dart';
 import 'DatabaseHelper.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
+
+String USER_NAME = '';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -73,6 +73,8 @@ class _LoginState extends State<Login> {
                           if (await DatabaseHelper().verifyUser(
                               userController.text, passwordController.text)) {
                             print('pode entrar');
+                            USER_NAME = userController.text;
+                            print(USER_NAME);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -97,7 +99,7 @@ class _LoginState extends State<Login> {
                         //DatabaseHelper().listVideos();
                         //DatabaseHelper().filterVideo(0,genre:'Animação');
                         //DatabaseHelper().filterVideo(0);
-                        //DatabaseHelper().listGenres();
+                        DatabaseHelper().listGenres();
                         //DatabaseHelper().listVideo_Genres();
                         //DatabaseHelper().listVideos();
 
@@ -110,7 +112,25 @@ class _LoginState extends State<Login> {
                       child: const Text('Não tem uma conta? Cadastre-se',
                           style: TextStyle(
                               fontSize: 16,
-                              decoration: TextDecoration.underline)))
+                              decoration: TextDecoration.underline))),
+                  SizedBox(height: 40),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width - 80,
+                    height: 40,
+                    child: ElevatedButton(
+                        onPressed: () {
+                          USER_NAME = '';
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) =>
+                                      Home(user: USER_NAME))));
+                        },
+                        child: const Text(
+                          'Entrar sem Cadastro',
+                          style: TextStyle(fontSize: 20),
+                        )),
+                  ),
                 ],
               ),
             )

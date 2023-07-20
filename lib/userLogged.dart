@@ -1,4 +1,3 @@
-import 'package:catalogo_app/addVideoPopUp.dart';
 import 'package:catalogo_app/videosTeste.dart';
 import 'package:flutter/material.dart';
 

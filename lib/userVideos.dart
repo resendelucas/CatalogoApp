@@ -1,5 +1,8 @@
+import 'package:catalogo_app/login.dart';
 import 'package:catalogo_app/userLogged.dart';
 import 'package:flutter/material.dart';
+
+import 'userNotLogged.dart';
 
 class UserVideos extends StatefulWidget {
   const UserVideos({super.key, required this.username});
@@ -15,9 +18,9 @@ class _UserVideosState extends State<UserVideos> {
 
   late final List<Widget> _screens = [
     UserLoggedVideosScreen(
-      username: '',
+      username: USER_NAME,
     ),
-    // UserNotLoggedScreen()
+    UserNotLoggedScreen()
   ];
 
   @override

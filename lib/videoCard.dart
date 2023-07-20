@@ -19,6 +19,7 @@ class VideoDb {
   String ageRestriction;
   int durationMinutes;
   String releaseDate;
+  List<String> genres;
 
   VideoDb(
     this.id,
@@ -28,7 +29,8 @@ class VideoDb {
     this.ageRestriction,
     this.durationMinutes,
     this.thumbnailImageId,
-    this.releaseDate
+    this.releaseDate,
+    this.genres
   );
 }
 

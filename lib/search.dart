@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'DatabaseHelper.dart';
 import 'videoCard.dart';
-import 'videosTeste.dart';
 
 class SearchVideos extends StatefulWidget {
   const SearchVideos({super.key});
@@ -15,8 +14,8 @@ class _SearchVideosState extends State<SearchVideos> {
   
   final List<bool> _selectedTypeVideo = [true, false];
   final List<String> genreList = [ 'Todos', 'Ação','Animação', 'Aventura', 'Comédia',
-  'Crime', 'Documentário', 'Drama', 'Esportes', 'Fantasia', 'Ficção', 'Guerra',  'Mistério', 
-  'Musical', 'Reality', 'Romance','Sobrevivência','Suspense', 'Terror',  'Variedades',
+  'Documentário', 'Drama', 'Esportes', 'Fantasia', 'Ficção', 'Guerra',  'Mistério', 
+  'Musical', 'Policial', 'Reality', 'Romance','Sobrevivência','Suspense', 'Terror',  'Variedades',
   ];
 
   String genreSelected = 'Todos';

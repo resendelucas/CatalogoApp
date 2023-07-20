@@ -1,21 +1,38 @@
+import 'package:catalogo_app/addVideoPopUp.dart';
 import 'package:catalogo_app/videoCard.dart';
 import 'package:flutter/material.dart';
-
+import 'login.dart';
 import 'DatabaseHelper.dart';
 
 class VideoDetails extends StatefulWidget {
   const VideoDetails({super.key, required this.video});
 
   final VideoDb video;
-
   @override
   State<VideoDetails> createState() => _VideoDetailsState();
 }
 
 class _VideoDetailsState extends State<VideoDetails> {
+
+  bool verifyUserLogged(){
+    print("AQUI NO VIDEO DETAIL: $USER_NAME");
+    if (USER_NAME == '') return true;
+    return false;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: verifyUserLogged() ? null: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: verifyUserLogged() ? null: FloatingActionButton(
+          backgroundColor: const Color.fromARGB(255, 132, 172, 205),
+          child: Icon(Icons.edit),
+          onPressed: (){
+            showDialog(
+              context: context, 
+              builder: (context){
+                return EditVideoScreen(video: widget.video,);
+              });
+      }),
       backgroundColor: Color.fromARGB(255, 44, 47, 66),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,

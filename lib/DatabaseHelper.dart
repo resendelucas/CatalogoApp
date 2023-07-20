@@ -59,7 +59,6 @@ class DatabaseHelper {
             );
       """);
     });
-
     return db;
   }
 
@@ -172,13 +171,13 @@ class DatabaseHelper {
       String releaseDate) async {
     Database db = await initDb();
     String sql = """UPDATE video 
-    SET name = '?', 
-    description = '?', 
+    SET name = ?, 
+    description = ?, 
     type = ?, 
-    ageRestriction = '?', 
+    ageRestriction = ?, 
     durationMinutes = ? , 
-    thumbnailImageId = '?', 
-    releaseDate = '?'
+    thumbnailImageId = ?, 
+    releaseDate = ?
     WHERE id = ?;""";
     int n = await db.rawUpdate(sql, [
       name,
@@ -198,6 +197,7 @@ class DatabaseHelper {
     Database db = await initDb();
     String sql = "SELECT * FROM video WHERE name = '$name'";
     List ret = await db.rawQuery(sql);
+    List<String> generos = await genresByVideo(ret[0]["name"]);
     VideoDb v = VideoDb(
         ret[0]["id"],
         ret[0]["name"],
@@ -206,7 +206,8 @@ class DatabaseHelper {
         ret[0]["ageRestriction"],
         ret[0]["durationMinutes"],
         ret[0]["thumbnailImageId"],
-        ret[0]["releaseDate"]);
+        ret[0]["releaseDate"],
+        generos);
 
     print(v);
     return v;
@@ -246,7 +247,6 @@ class DatabaseHelper {
     }
 
     List<dynamic> ret = await db.rawQuery(sql);
-
     List<VideoDb> videos = [];
     for (int i = 0; i < ret.length; i++) {
       VideoDb video = await searchVideo(ret[i]['name']);
@@ -255,8 +255,28 @@ class DatabaseHelper {
     return videos;
   }
 
-  Future<void> insereDb() async {
-    /*saveVideoDb(
+  Future<void> AutoPopulateDb() async {
+    saveGenreDb('Suspense');
+    saveGenreDb('Ação');
+    saveGenreDb('Aventura');
+    saveGenreDb('Comédia');
+    saveGenreDb('Drama');
+    saveGenreDb('Ficção');
+    saveGenreDb('Romance');
+    saveGenreDb('Terror');
+    saveGenreDb('Animação');
+    saveGenreDb('Documentário');
+    saveGenreDb('Fantasia');
+    saveGenreDb('Musical');
+    saveGenreDb('Reality');
+    saveGenreDb('Variedades');
+    saveGenreDb('Guerra');
+    saveGenreDb('Sobrevivência');
+    saveGenreDb('Mistério');
+    saveGenreDb('Esportes');
+    saveGenreDb('Crime');
+
+    saveVideoDb(
         'Shrek',
         'Descrição 1',
         0,
@@ -492,27 +512,7 @@ class DatabaseHelper {
         40,
         'https://lumiere-a.akamaihd.net/v1/images/the_mandalorian_800d1505.jpeg',
         '12/11/2019',
-        ["Ação", "Aventura", "Fantasia", "Ficção"]);*/
-
-    /*saveGenreDb('Suspense');
-    saveGenreDb('Ação');
-    saveGenreDb('Aventura');
-    saveGenreDb('Comédia');
-    saveGenreDb('Drama');
-    saveGenreDb('Ficção');
-    saveGenreDb('Romance');
-    saveGenreDb('Terror');
-    saveGenreDb('Animação');
-    saveGenreDb('Documentário');
-    saveGenreDb('Fantasia');
-    saveGenreDb('Musical');
-    saveGenreDb('Reality');
-    saveGenreDb('Variedades');
-    saveGenreDb('Guerra');
-    saveGenreDb('Sobrevivência');
-    saveGenreDb('Mistério');
-    saveGenreDb('Esportes');
-    saveGenreDb('Crime');*/
+        ["Ação", "Aventura", "Fantasia", "Ficção"]);
   }
 
   listGenres() async {
@@ -535,6 +535,7 @@ class DatabaseHelper {
     List ret = await db.rawQuery(sql);
     print("Video_genero : $ret");
   }
+
 }
 
 /*void deleteDatabase(String path) =>
